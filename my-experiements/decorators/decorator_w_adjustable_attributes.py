@@ -16,10 +16,12 @@ def add_attribute(attr, value):
     return wrapper
     
 @add_attribute("unittest", True)
-def a():    
-   pass 
+def a():
+    pass
+ 
 
 
 
 if __name__ == '__main__':
+    setattr(a, 'unittest', True)
     print(a.unittest)
