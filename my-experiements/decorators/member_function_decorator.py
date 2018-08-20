@@ -70,6 +70,7 @@ class Raspberry(One):
     def method2(self, n=2):
         return n
 '''
+    
 if __name__ == '__main__':
     reg = One()
     start = time.time() 
