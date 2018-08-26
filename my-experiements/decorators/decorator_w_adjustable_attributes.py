@@ -8,18 +8,17 @@ import logging
 
 def add_attribute(attr, value):
     def wrapper(func):
+        setattr(func, attr, value)
         @wraps(func)
         def inner(*args, **kwargs):
-            setattr(func, attr, value)
             return func(*args, **kwargs)
         return inner
     return wrapper
     
 @add_attribute("unittest", True)
-def a():    
-   pass 
-
-
+def a(text):    
+   print(text) 
 
 if __name__ == '__main__':
+    a("ABC")
     print(a.unittest)
