@@ -20,5 +20,4 @@ def a(text):
    print(text) 
 
 if __name__ == '__main__':
-    a("ABC")
     print(a.unittest)
