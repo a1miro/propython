@@ -10,18 +10,22 @@ import time
 class Cache(object):
     def __init__(self):
         self._cached = {} 
-        pass
     
     def cached(self, func=None, *, lifespan=None):
-        cached_object = self
+        print("self: {}".format(self))
+        print("func: {}".format(self))
+        print("lifespan: {}".format(lifespan))
         if func is None:
             return partial(Cache.cached, self, lifespan=lifespan)
         @wraps(func)
         def wrapper(*args, **kwargs):
-            if cached_object._cached.get((args, kwargs), None) is None:
-                cached_object._cached[(args, kwargs)] = func(*args, *kwargs)
+            '''
+            if self._cached.get((args, kwargs), None) is None:
+                self._cached[(args, kwargs)] = func(*args, **kwargs)
             else:
-                return cached_object._cached[(args, kwargs)]
+                return self._cached[(args, kwargs)]
+            '''
+            print("args: {}".format(args))
         return wrapper
 
 '''
@@ -34,9 +38,9 @@ def cached(func=None, *, lifespam=None):
     return wrapper
 '''
 
-cache = Cache
+cache = Cache()
 
-@cache.cached(1)
+@cached(8)
 def method0(n=0):
     time.sleep(1)
     return n + 0
@@ -53,6 +57,6 @@ def method2(n=2):
 
 
 if __name__ == '__main__':
-    method0()
-    method1()
-    method2()
+    method0(0)
+    method1(1)
+    method2(2)

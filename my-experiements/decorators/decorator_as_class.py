@@ -7,12 +7,19 @@ import types
 from functools import wraps
 
 class Cache(object):
-    def __init__(self, func):
-        wraps(func)(self)
-        
-    def __call__(self, *args, **kwargs):
-        print("__call__\n")
-        return self.__wrapped__(*args, **kwargs)
+    def __init__(self, param):
+        '''
+        if func is not None:
+            wraps(func)(self)
+        '''
+        print("self: {}".format(self))
+        print("param: {}".format(param))
+    
+    def __call__(self, func, *args, **kwargs):
+        wraps(self)(func)
+        def wrapped(*args, **kwargs):
+            return self.__wrapped__(*args, **kwargs) 
+        return wrapped
     
     def __get__(self, instance, cls):
         if instance is None:
@@ -21,7 +28,7 @@ class Cache(object):
             return types.MethodType(self, instance)    
 
     
-@Cache
+@Cache(1)
 def standalone():
     print("standalone func call")
 
@@ -29,11 +36,11 @@ class Test(object):
     def __init__(self):
         pass
     @Cache 
-    def test(self):
-        print("Member method test \n")
+    def test(self, message):
+        print("Message: {}".format(message))
         
 if __name__ == '__main__':
     standalone()
     t = Test()
-    t.test()
+    t.test("Hello World!")
     
